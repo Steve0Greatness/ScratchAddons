@@ -1,25 +1,24 @@
 {
-    "name": "Scratch News",
-    "description": "",
-    "tags": ["community"],
-    "credits": [
-      {
-        "name": "Steve0Greatness",
-        "link": "https://scratch.mit.edu/users/Steve0Greatness/"
-      }
-    ],
-    "userscripts": [
-      {
-        "url": "userscript.js",
-        "matches": ["https://scratch.mit.edu/news"]
-      }
-    ],
-    "userstyles": [
-        {
-          "url": "userstyle.css",
-          "matches": ["https://scratch.mit.edu/news"]
-        }
-      ],
-    "versionAdded": "1.32.0"
-  }
-  
+  "name": "Scratch News",
+  "description": "",
+  "tags": ["community"],
+  "credits": [
+    {
+      "name": "Steve0Greatness",
+      "link": "https://scratch.mit.edu/users/Steve0Greatness/"
+    }
+  ],
+  "userscripts": [
+    {
+      "url": "userscript.js",
+      "matches": ["https://scratch.mit.edu/news"]
+    }
+  ],
+  "userstyles": [
+    {
+      "url": "userstyle.css",
+      "matches": ["https://scratch.mit.edu/news"]
+    }
+  ],
+  "versionAdded": "1.32.0"
+}

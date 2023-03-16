@@ -1,29 +1,29 @@
 .SA-news-el-title {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .SA-news-el-header-url {
-    background: var(--darkWww-gray, #f2f2f2);
-    padding: 5px;
-    border-top-color: 1px solid var(--darkWww-gray-boxHighlight, #fff);
-    border-bottom-color: 1px solid var(--darkWww-box-border, #d9d9d9);
-    display: flex;
-    align-items: center;
+  background: var(--darkWww-gray, #f2f2f2);
+  padding: 5px;
+  border-top-color: 1px solid var(--darkWww-gray-boxHighlight, #fff);
+  border-bottom-color: 1px solid var(--darkWww-box-border, #d9d9d9);
+  display: flex;
+  align-items: center;
 }
 
 .SA-news-el-time {
-    color: grey;
-    display: inline-block;
-    margin-left: 2em;
+  color: grey;
+  display: inline-block;
+  margin-left: 2em;
 }
 
 .SA-news-el-img {
-    display: inline-block;
-    margin-right: 1em;
+  display: inline-block;
+  margin-right: 1em;
 }
 
 .SA-news-el {
-    border: 1px var(--darkWww-box-border, #d9d9d9) solid;
-    background-color: var(--darkWww-box, #fff);
-    color: var(--darkWww-box-text, #000);
+  border: 1px var(--darkWww-box-border, #d9d9d9) solid;
+  background-color: var(--darkWww-box, #fff);
+  color: var(--darkWww-box-text, #000);
 }
