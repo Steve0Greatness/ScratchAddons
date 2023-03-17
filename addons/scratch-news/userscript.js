@@ -1,28 +1,25 @@
 export default async function ({ addon, console, msg }) {
+  const docContent = document.querySelector("#content");
+  docContent.innerHTML = "";
+
   const dateStrOpts = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
 
   document.title = "Scratch - News";
 
-  var scratchNews = await (await fetch("//api.scratch.mit.edu/news")).json(); // ?offset=3&limit=2
+  var scratchNews = await (await fetch("//api.scratch.mit.edu/news")).json(); // params: offset & limit
   /*
     - offset :
-        19 * (# of times load more has been clicked)
+      19 * (# of times load more has been clicked)
     - limit  :
-        20 * (# of times load more has been clicked)
-    */
-
-  const SAChangelog = await readSAChangelog();
-
+      20 * (# of times load more has been clicked)
+  */
   var news = [
-    ...SAChangelog.map((news) => makeGeneral(news, "SA")),
     ...scratchNews.map((news) => makeGeneral(news, "Scratch")),
-  ]
+  ];
+  checkNewsSettings("SANews", await readSAChangelog(), "SA")
+  news = news
     .sort((a, b) => a.date < b.date)
-    .splice(1, 20);
-  console.log(news);
-
-  const docContent = document.querySelector("#content");
-  docContent.innerHTML = "";
+    .splice(0, 20);
 
   for (let newsItem of news) {
     var newsElement = document.createElement("article");
@@ -37,7 +34,10 @@ export default async function ({ addon, console, msg }) {
 `;
     docContent.appendChild(newsElement);
   }
-
+  /**
+   * 
+   * @returns {Promise<{ version: string, index: number, tag: string, name: string, date: Date, entry: string }>}
+   */
   function readSAChangelog() {
     return new Promise(async (res, rej) => {
       var SAChangelog = await fetch("//api.github.com/repos/ScratchAddons/website-v2/contents/data/changelog.yml");
@@ -62,6 +62,22 @@ export default async function ({ addon, console, msg }) {
       );
     });
   }
+  /**
+   * 
+   * @param {string} settingId 
+   * @param {{name: string, date: Date, desc: string, link: string, img: string, type: string[]}[]} addNews
+   * @param {string} newsType
+   */
+  function checkNewsSettings(settingId, addNews, newsType) {
+    if (addon.settings.get(settingId))
+      news.push(...addNews.map(article => makeGeneral(article, newsType)));
+  }
+  /**
+   * 
+   * @param {object} news 
+   * @param {string} type 
+   * @returns {{ name: string, date: Date, desc: string, link: string, img: string, type: string[] }}
+   */
   function makeGeneral(news, type) {
     var entry = {
       name: null,

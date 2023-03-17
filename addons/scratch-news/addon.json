@@ -15,10 +15,18 @@
     }
   ],
   "userstyles": [
-      {
-        "url": "userstyle.css",
-        "matches": ["https://scratch.mit.edu/news"]
-      }
-    ],
+    {
+      "url": "userstyle.css",
+      "matches": ["https://scratch.mit.edu/news"]
+    }
+  ],
+  "settings": [
+    {
+      "name": "Scratch Addons News",
+      "id": "SANews",
+      "type": "boolean",
+      "default": true
+    }
+  ],
   "versionAdded": "1.32.0"
 }
