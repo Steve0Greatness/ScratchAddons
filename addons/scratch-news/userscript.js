@@ -17,13 +17,9 @@ export default async function ({ addon, console, msg }) {
     - limit  :
       20 * (# of times load more has been clicked)
   */
-  var news = [
-    ...scratchNews.map((news) => makeGeneral(news, "Scratch")),
-  ];
-  checkNewsSettings("SANews", await readSAChangelog(), "SA")
-  news = news
-    .sort((a, b) => a.date < b.date)
-    .splice(0, 20);
+  var news = [...scratchNews.map((news) => makeGeneral(news, "Scratch"))];
+  checkNewsSettings("SANews", await readSAChangelog(), "SA");
+  news = news.sort((a, b) => a.date < b.date).splice(0, 20);
 
   const articles = document.createElement("section");
   for (let newsItem of news) {
@@ -41,7 +37,7 @@ export default async function ({ addon, console, msg }) {
   }
   docContent.appendChild(articles);
   /**
-   * 
+   *
    * @returns {Promise<{ version: string, index: number, tag: string, name: string, date: Date, entry: string }>}
    */
   function readSAChangelog() {
@@ -69,19 +65,18 @@ export default async function ({ addon, console, msg }) {
     });
   }
   /**
-   * 
-   * @param {string} settingId 
+   *
+   * @param {string} settingId
    * @param {{name: string, date: Date, desc: string, link: string, img: string, type: string[]}[]} addNews
    * @param {string} newsType
    */
   function checkNewsSettings(settingId, addNews, newsType) {
-    if (addon.settings.get(settingId))
-      news.push(...addNews.map(article => makeGeneral(article, newsType)));
+    if (addon.settings.get(settingId)) news.push(...addNews.map((article) => makeGeneral(article, newsType)));
   }
   /**
-   * 
-   * @param {object} news 
-   * @param {string} type 
+   *
+   * @param {object} news
+   * @param {string} type
    * @returns {{ name: string, date: Date, desc: string, link: string, img: string, type: string[] }}
    */
   function makeGeneral(news, type) {
