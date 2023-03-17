@@ -3,7 +3,7 @@ export default async function ({ addon, console, msg }) {
   docContent.innerHTML = "";
   const loadMore = document.createElement("button");
   loadMore.id = "SA-news-LoadMore";
-  loadMore.classList.add("SA-news-LoadMore", "button", "grey")
+  loadMore.classList.add("SA-news-LoadMore", "button", "grey");
   loadMore.innerText = "Load More";
 
   const dateStrOpts = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
