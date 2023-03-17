@@ -1,6 +1,10 @@
 export default async function ({ addon, console, msg }) {
   const docContent = document.querySelector("#content");
   docContent.innerHTML = "";
+  const loadMore = document.createElement("button");
+  loadMore.id = "SA-news-LoadMore";
+  loadMore.classList.add("SA-news-LoadMore", "button", "grey")
+  loadMore.innerText = "Load More";
 
   const dateStrOpts = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
 
@@ -21,6 +25,7 @@ export default async function ({ addon, console, msg }) {
     .sort((a, b) => a.date < b.date)
     .splice(0, 20);
 
+  const articles = document.createElement("section");
   for (let newsItem of news) {
     var newsElement = document.createElement("article");
     newsElement.classList.add("SA-news-el", ...newsItem.type.map((e) => `SA-news-type-${e}`));
@@ -32,8 +37,9 @@ export default async function ({ addon, console, msg }) {
 </a>
 <p class="SA-news-el-body">${newsItem.desc}</p>
 `;
-    docContent.appendChild(newsElement);
+    articles.appendChild(newsElement);
   }
+  docContent.appendChild(articles);
   /**
    * 
    * @returns {Promise<{ version: string, index: number, tag: string, name: string, date: Date, entry: string }>}
