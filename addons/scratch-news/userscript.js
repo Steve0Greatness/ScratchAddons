@@ -1,6 +1,7 @@
 export default async function ({ addon, console, msg }) {
   const docContent = document.querySelector("#content");
   docContent.innerHTML = "";
+
   const loadMore = document.createElement("button");
   loadMore.id = "SA-news-LoadMore";
   loadMore.classList.add("SA-news-LoadMore", "button", "grey");
@@ -10,12 +11,14 @@ export default async function ({ addon, console, msg }) {
 
   document.title = "Scratch - News";
 
+  var scratchNewsOpts = { offset: 0, limit: 20 };
+  var loadMoreClicked = 0;
   var scratchNews = await (await fetch("//api.scratch.mit.edu/news")).json(); // params: offset & limit
   /*
     - offset :
       19 * (# of times load more has been clicked)
     - limit  :
-      20 * (# of times load more has been clicked)
+      20
   */
   var news = [...scratchNews.map((news) => makeGeneral(news, "Scratch"))];
   checkNewsSettings("SANews", await readSAChangelog(), "SA");
@@ -36,6 +39,7 @@ export default async function ({ addon, console, msg }) {
     articles.appendChild(newsElement);
   }
   docContent.appendChild(articles);
+  articles.after(loadMore);
   /**
    *
    * @returns {Promise<{ version: string, index: number, tag: string, name: string, date: Date, entry: string }>}
@@ -108,4 +112,6 @@ export default async function ({ addon, console, msg }) {
       };
     return entry;
   }
+  /** */
+  function loadMoreNews() {}
 }
