@@ -33,24 +33,67 @@ export default async function ({ addon, console }) {
 	Tabs.appendChild(RecentlyViewedTab);
 
 	RecentlyViewedCountHolder.innerText = RecentlyViewedProjects.length;
-	console.log(RecentlyViewedProjects)
+	//console.log(RecentlyViewedProjects)
 
-	const MediaListHolder = await addon.tab.waitForElement(".media-list[data-content]");
 
 	const MediaList = document.createElement("ul");
 	MediaList.classList.add("media-list");
+	
+	const SetCorrectTab = () => {
+		RecentlyViewedTab.classList.add("active");
+		document.querySelector("[data-tab=projects]").classList.remove("active");
+	};
 
-	RecentlyViewedAnchor.addEventListener("click", OpenRecentlyViewedTab);
+	const RunForCorrectURL = () => {
+		if (location.hash !== "#" + RecentlyViewed)
+			return;
+		SetCorrectTab();
+		OpenRecentlyViewedTab();
+	};
+
+	addon.tab.addEventListener("urlChange", RunForCorrectURL);
+	RunForCorrectURL();
 
 	function OpenRecentlyViewedTab() {
-		console.log("Wipping previous medialist");
-		MediaListHolder.innerHTML = "";
-		MediaListHolder.appendChild(MediaList);
+		//console.log("Wipping previous medialist");
+		const MainContentHolder = document.querySelector("#main-content");
+		MainContentHolder.innerHTML = "";
+		MainContentHolder.appendChild(InitializeMainContent());
+		MainContentHolder.querySelector(".media-list").appendChild(MediaList)
 		for (let index = 0; index < RecentlyViewedProjects.length; index++) {
 			const ProjectObject = RecentlyViewedProjects[index];
 			const MediaItem = CreateMediaItem(ProjectObject);
 			MediaList.append(MediaItem);
 		}
+	}
+
+	function InitializeMainContent() {
+		const Holder = document.createElement("div");
+		Holder.innerHTML = `<div id="main-content" class="tab-content">
+	<div class="action-bar scroll">
+		<div class="inner">
+			<div class="dropdown radio-style button grey small">
+				<span class="dropdown-toggle black" data-toggle="dropdown">
+					<spam class="">Sort by</span>
+					<span class="caret"></span>
+				</span>
+				<div class="dropdown-menu radio-style">
+					<ul data-control="sort">
+						<li class="selected" data-descsort="datetime_modified">Last Modified</li>
+						<li data-descsort="view_count">Views</li>
+						<li data-descsort="love_count">Loves</li>
+						<li data-descsort="remixers_count">Remixes</li>
+						<li data-ascsort="title">A-Z</li>
+						<li data-descsort="title">Z-A</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="alert-view"></div>
+	<div class="media-list" data-content="list"></div>
+</div>`;
+		return Holder;
 	}
 
 	/**
