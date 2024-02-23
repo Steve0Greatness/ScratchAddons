@@ -39,17 +39,6 @@ export default async function ({ addon, console }) {
 	const MediaList = document.createElement("ul");
 	MediaList.classList.add("media-list");
 	
-	const SetCorrectTab = () => {
-		RecentlyViewedTab.classList.add("active");
-		document.querySelector("[data-tab=projects]").classList.remove("active");
-	};
-
-	const RunForCorrectURL = () => {
-		if (location.hash !== "#" + RecentlyViewed)
-			return;
-		SetCorrectTab();
-		OpenRecentlyViewedTab();
-	};
 
 	addon.tab.addEventListener("urlChange", RunForCorrectURL);
 	RunForCorrectURL();
@@ -103,7 +92,8 @@ export default async function ({ addon, console }) {
 	function CreateMediaItem(ProjectObject) {
 		const href = `/projects/${ProjectObject.id}/`;
 		const modified = new Date(ProjectObject.history.modified);
-
+		const author = ProjectObject.author.username;
+		
 
 		const Holder = document.createElement("li");
 		Holder.classList.add("media-item-content");
@@ -122,7 +112,7 @@ export default async function ({ addon, console }) {
 		MediaInfo.classList.add("media-info");
 
 		const MediaInfoTitleHolder = document.createElement("span");
-		MediaInfoTitleHolder.classList.add("media-item-info", "title");
+		MediaInfoTitleHolder.classList.add("media-info-item", "title");
 		const MediaInfoTitle = document.createElement("a");
 		MediaInfoTitle.href = href;
 		MediaInfoTitle.innerText = ProjectObject.title;
@@ -130,7 +120,13 @@ export default async function ({ addon, console }) {
 
 		const MediaInfoDate = document.createElement("span");
 		MediaInfoDate.classList.add("media-info-item", "date", "shortDateFormat");
-		MediaInfoDate.innerText = GetShortestTimeDiff(modified);
+		MediaInfoDate.innerText = "Last modified: " + GetShortestTimeDiff(modified);
+
+		const MediaInfoAuthor = document.createElement("span");
+		MediaInfoAuthor.classList.add("media-info-item", "sa-rv-author");
+		const MediaInfoAuthorAnchor = document.createElement("a");
+		MediaInfoAuthorAnchor.href = `/users/${author}`;
+		MediaInfoAuthorAnchor.innerText = author;
 		
 		MediaInfo.append(MediaInfoTitleHolder, MediaInfoDate);
 		Holder.append(MediaThumbnailHolder, MediaInfo);
@@ -145,7 +141,7 @@ export default async function ({ addon, console }) {
 	 * @param {String} locale
 	 */
 	function GetShortestTimeDiff(Date0, Date1=new Date(Date.now()), locale="en") {
-		const RTF = new Intl.RelativeTimeFormat(locale, { numeric: "always", style: "short" });
+		const RTF = new Intl.RelativeTimeFormat(locale, { numeric: "always", style: "long" });
 
 		const DiffYears = Date1.getFullYear() - Date0.getFullYear();
 		const DiffMonths = Date1.getMonth() - Date0.getMonth();
@@ -166,4 +162,16 @@ export default async function ({ addon, console }) {
 			return RTF.format(DiffMinutes * -1, "minute");
 		return RTF.format(DiffSeconds * -1, "seconds")
 	}
+
+	function SetCorrectTab() {
+		RecentlyViewedTab.classList.add("active");
+		document.querySelector("[data-tab=projects]").classList.remove("active");
+	};
+
+	function RunForCorrectURL() {
+		if (location.hash !== "#" + RecentlyViewed)
+			return;
+		SetCorrectTab();
+		OpenRecentlyViewedTab();
+	};
 }
