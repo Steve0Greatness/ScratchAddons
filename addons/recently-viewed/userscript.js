@@ -135,8 +135,10 @@ export default async function ({ addon, console }) {
 		
 		MediaInfo.append(MediaInfoTitleHolder, MediaInfoDate, MediaInfoAuthor);
 
-		const MediaAddTo = document.createElement("div");
-		MediaAddTo.outerHTML = `<div data-control="add-to" class="media-control dropdown button grey small enabled"><span data-toggle="dropdown" class="dropdown-toggle black">Add to <span class="caret"></span></span><div data-content="addto-gallery-list" data-project-id="487076566" class="dropdown-menu"></div></div>`;
+		//const MediaAddTo = document.createElement("div");
+		//MediaAddTo.classList.add("media-control", "dropdown", "button", "grey", "small");
+		//MediaAddTo.dataset.control = "add-to";
+		//MediaAddTo.innerHTML = `<span data-toggle="dropdown" class="dropdown-toggle black">Add to <span class="caret"></span></span><div data-content="addto-gallery-list" data-project-id="${ProjectObject.id}" class="dropdown-menu"></div>`;
 
 
 
