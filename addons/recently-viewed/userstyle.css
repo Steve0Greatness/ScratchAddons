@@ -1,0 +1,13 @@
+.media-info-item.sa-rv-author {
+	margin-top: 5px;
+}
+
+.media-info-item.sa-rv-author :any-link {
+	font-size: 11px;
+	display: inline-flex;
+}
+
+.media-info-item.sa-rv-author :any-link img {
+	border-radius: 2px;
+	margin-right: 5px;
+}

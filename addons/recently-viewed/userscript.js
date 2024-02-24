@@ -25,14 +25,14 @@ export default async function ({ addon, console }) {
 	const RecentlyViewedAnchor = document.createElement("a");
 	RecentlyViewedAnchor.href = "#" + RecentlyViewed;
 
-	const RecentlyViewedCountHolder = document.createElement("span");
-	RecentlyViewedCountHolder.dataset.content = RecentlyViewed + "-count";
+	//const RecentlyViewedCountHolder = document.createElement("span");
+	//RecentlyViewedCountHolder.dataset.content = RecentlyViewed + "-count";
 
-	RecentlyViewedAnchor.append("Recently Viewed (", RecentlyViewedCountHolder, ")");
+	RecentlyViewedAnchor.append("Recently Viewed");
 	RecentlyViewedTab.appendChild(RecentlyViewedAnchor);
 	Tabs.appendChild(RecentlyViewedTab);
 
-	RecentlyViewedCountHolder.innerText = RecentlyViewedProjects.length;
+	//RecentlyViewedCountHolder.innerText = RecentlyViewedProjects.length;
 	//console.log(RecentlyViewedProjects)
 
 
@@ -126,10 +126,21 @@ export default async function ({ addon, console }) {
 		MediaInfoAuthor.classList.add("media-info-item", "sa-rv-author");
 		const MediaInfoAuthorAnchor = document.createElement("a");
 		MediaInfoAuthorAnchor.href = `/users/${author}`;
-		MediaInfoAuthorAnchor.innerText = author;
+		const MediaInfoAuthorPFP = document.createElement("img");
+		MediaInfoAuthorPFP.src = `https://cdn2.scratch.mit.edu/get_image/user/${ProjectObject.author.id}_20x20.png`;
+		MediaInfoAuthorPFP.width = "20";
+		MediaInfoAuthorPFP.height = "20";
+		MediaInfoAuthorAnchor.append(MediaInfoAuthorPFP, author);
+		MediaInfoAuthor.appendChild(MediaInfoAuthorAnchor)
 		
-		MediaInfo.append(MediaInfoTitleHolder, MediaInfoDate);
-		Holder.append(MediaThumbnailHolder, MediaInfo);
+		MediaInfo.append(MediaInfoTitleHolder, MediaInfoDate, MediaInfoAuthor);
+
+		const MediaAddTo = document.createElement("div");
+		MediaAddTo.outerHTML = `<div data-control="add-to" class="media-control dropdown button grey small enabled"><span data-toggle="dropdown" class="dropdown-toggle black">Add to <span class="caret"></span></span><div data-content="addto-gallery-list" data-project-id="487076566" class="dropdown-menu"></div></div>`;
+
+
+
+		Holder.append(MediaThumbnailHolder, MediaInfo, MediaAddTo);
 
 		return Holder;
 	}

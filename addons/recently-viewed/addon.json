@@ -11,6 +11,12 @@
 			"matches": [ "https://scratch.mit.edu/mystuff" ]
 		}
 	],
+	"userstyles": [
+		{
+			"url": "userstyle.css",
+			"matches": [ "https://scratch.mit.edu/mystuff" ]
+		}
+	],
 	"credits": [
 		{
 			"name": "Steve0Greatness",
